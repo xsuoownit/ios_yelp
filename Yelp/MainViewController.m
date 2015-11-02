@@ -43,6 +43,28 @@
     
     self.tableView.estimatedRowHeight = 140;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    UIColor *navigationBarTintColor = [UIColor colorWithRed:191/255.0 green:25/255.0 blue:0 alpha:1];
+    [self.navigationController.navigationBar setBarTintColor:navigationBarTintColor];
+    
+    UISearchBar *searchBar = [[UISearchBar alloc] init];
+    self.navigationItem.titleView = searchBar;
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTitle:@"Filter" forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12.0f];
+    [button.layer setCornerRadius:4.0f];
+    [button.layer setMasksToBounds:YES];
+    [button.layer setBorderWidth:1.0f];
+    [button.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+    button.frame=CGRectMake(0.0, 100.0, 60.0, 28.0);
+    [button addTarget:self action:@selector(onFilterTapped)  forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = filterButton;
+}
+
+- (void)onFilterTapped {
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
