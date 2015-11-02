@@ -23,7 +23,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Cockscomb" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gBs-HP-gRq">
-                        <rect key="frame" x="86" y="8" width="71" height="14.5"/>
+                        <rect key="frame" x="86" y="8" width="184" height="14.5"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -70,10 +70,13 @@
                 <constraints>
                     <constraint firstItem="i32-Sb-tVu" firstAttribute="leading" secondItem="mQJ-D3-EB3" secondAttribute="trailing" constant="8" id="0Le-Yi-PFN"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="mQJ-D3-EB3" secondAttribute="bottom" constant="8" id="3uw-zp-XsW"/>
+                    <constraint firstItem="lRF-za-KWD" firstAttribute="leading" secondItem="gBs-HP-gRq" secondAttribute="trailing" constant="8" id="BKf-EO-usm"/>
                     <constraint firstItem="lRF-za-KWD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gBs-HP-gRq" secondAttribute="trailing" constant="8" id="ESK-6d-D3a"/>
                     <constraint firstItem="9Ez-7I-sjG" firstAttribute="centerY" secondItem="i32-Sb-tVu" secondAttribute="centerY" id="Ex8-59-Px0"/>
                     <constraint firstItem="mQJ-D3-EB3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="FKZ-5c-Rjc"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="D2X-3U-h5c" secondAttribute="trailing" constant="8" id="OOw-2Y-np2"/>
                     <constraint firstItem="7dU-8Q-mu8" firstAttribute="top" secondItem="D2X-3U-h5c" secondAttribute="bottom" constant="4.5" id="UR3-HF-nZE"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7dU-8Q-mu8" secondAttribute="trailing" constant="8" id="W83-ge-bUd"/>
                     <constraint firstItem="gBs-HP-gRq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="aKY-6Q-TNY"/>
                     <constraint firstItem="gBs-HP-gRq" firstAttribute="leading" secondItem="mQJ-D3-EB3" secondAttribute="trailing" constant="8" id="c0i-is-Obe"/>
                     <constraint firstItem="mQJ-D3-EB3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="cRP-u0-GSS"/>
