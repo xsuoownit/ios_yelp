@@ -10,9 +10,11 @@
 #import "YelpBusiness.h"
 #import "BusinessCell.h"
 
-@interface MainViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSArray *businesses;
+@property (strong, nonatomic) NSArray *filteredBusinesses;
 
 @end
 
@@ -27,6 +29,7 @@
                                deals:NO
                           completion:^(NSArray *businesses, NSError *error) {
                               self.businesses = businesses;
+                              self.filteredBusinesses = businesses;
                               [self.tableView reloadData];
                           }];
     }
@@ -47,8 +50,10 @@
     UIColor *navigationBarTintColor = [UIColor colorWithRed:191/255.0 green:25/255.0 blue:0 alpha:1];
     [self.navigationController.navigationBar setBarTintColor:navigationBarTintColor];
     
-    UISearchBar *searchBar = [[UISearchBar alloc] init];
-    self.navigationItem.titleView = searchBar;
+    self.searchBar = [[UISearchBar alloc] init];
+    self.searchBar.placeholder = @"Restaurants";
+    self.searchBar.delegate = self;
+    self.navigationItem.titleView = self.searchBar;
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:@"Filter" forState:UIControlStateNormal];
@@ -61,6 +66,9 @@
     [button addTarget:self action:@selector(onFilterTapped)  forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = filterButton;
+    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.tableView addGestureRecognizer:gestureRecognizer];
 }
 
 - (void)onFilterTapped {
@@ -68,13 +76,31 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.businesses.count;
+    return self.filteredBusinesses.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BusinessCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"BusinessCell"];
-    cell.business = self.businesses[indexPath.row];
+    cell.business = self.filteredBusinesses[indexPath.row];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if (searchText.length == 0) {
+        self.filteredBusinesses = self.businesses;
+    } else {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains[c] %@", searchText];
+        self.filteredBusinesses = [self.businesses filteredArrayUsingPredicate:predicate];
+    }
+    [self.tableView reloadData];
+}
+
+- (void)hideKeyboard {
+    [self.searchBar resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
