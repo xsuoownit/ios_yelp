@@ -73,8 +73,6 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         parameters[@"deals_filter"] = [NSNumber numberWithBool:hasDeal];
     }
     
-    NSLog(@"%@", parameters);
-    
     return [self GET:@"search"
           parameters:parameters
              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {

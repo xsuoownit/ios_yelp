@@ -11,6 +11,7 @@
 @implementation YelpBusiness
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict {
+
     if (self = [super init]) {
         _name = dict[@"name"];
 
