@@ -9,8 +9,9 @@
 #import "MainViewController.h"
 #import "YelpBusiness.h"
 #import "BusinessCell.h"
+#import "FiltersViewController.h"
 
-@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, FiltersViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSArray *businesses;
@@ -60,9 +61,9 @@
     button.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12.0f];
     [button.layer setCornerRadius:4.0f];
     [button.layer setMasksToBounds:YES];
-    [button.layer setBorderWidth:1.0f];
+    [button.layer setBorderWidth:0.8f];
     [button.layer setBorderColor: [[UIColor whiteColor] CGColor]];
-    button.frame=CGRectMake(0.0, 100.0, 60.0, 28.0);
+    button.frame = CGRectMake(0.0, 100.0, 60.0, 28.0);
     [button addTarget:self action:@selector(onFilterTapped)  forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = filterButton;
@@ -72,7 +73,10 @@
 }
 
 - (void)onFilterTapped {
-    
+    FiltersViewController *fvc = [[FiltersViewController alloc] init];
+    fvc.delegate = self;
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:fvc];
+    [self presentViewController:nvc animated:YES completion:nil];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -101,6 +105,10 @@
 
 - (void)hideKeyboard {
     [self.searchBar resignFirstResponder];
+}
+
+- (void) filtersViewController:(FiltersViewController *)filtersViewController didChangeFilters:(NSDictionary *)filters {
+    NSLog(@"fire new network");
 }
 
 - (void)didReceiveMemoryWarning {
