@@ -17,7 +17,7 @@
 @implementation SwitchCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    self.selectionStyle = UITableViewCellAccessoryNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

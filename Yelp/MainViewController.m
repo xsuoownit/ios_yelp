@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "YelpBusiness.h"
 #import "BusinessCell.h"
+#import "YelpClient.h"
 #import "FiltersViewController.h"
 
 @interface MainViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, FiltersViewControllerDelegate>
@@ -108,7 +109,27 @@
 }
 
 - (void) filtersViewController:(FiltersViewController *)filtersViewController didChangeFilters:(NSDictionary *)filters {
-    NSLog(@"fire new network");
+    NSArray *categories = [filters objectForKey:@"categories"];
+    if (categories == nil) {
+        categories = @[@"burgers"];
+    }
+    YelpSortMode sortMode;
+    if ([[filters objectForKey:@"sortMode"] isEqualToNumber:[NSNumber numberWithInt:0]]) {
+        sortMode = YelpSortModeBestMatched;
+    } else if ([[filters objectForKey:@"sortMode"] isEqualToNumber:[NSNumber numberWithInt:1]]) {
+        sortMode = YelpSortModeDistance;
+    } else {
+        sortMode = YelpSortModeHighestRated;
+    }
+    [YelpBusiness searchWithTerm:@"Restaurants"
+                        sortMode:sortMode
+                      categories:categories
+                           deals:[filters objectForKey:@"deals"]
+                      completion:^(NSArray *businesses, NSError *error) {
+                          self.businesses = businesses;
+                          self.filteredBusinesses = businesses;
+                          [self.tableView reloadData];
+                      }];
 }
 
 - (void)didReceiveMemoryWarning {

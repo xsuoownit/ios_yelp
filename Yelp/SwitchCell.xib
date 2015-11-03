@@ -19,7 +19,6 @@
                         <animations/>
                         <connections>
                             <action selector="switchValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="frV-dR-bS4"/>
-                            <action selector="toggleSwitch:" destination="KGk-i7-Jjw" eventType="valueChanged" id="zXt-Za-iIt"/>
                         </connections>
                     </switch>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajO-1G-NXQ">
