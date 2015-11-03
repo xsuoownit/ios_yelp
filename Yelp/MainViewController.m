@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSArray *businesses;
-@property (strong, nonatomic) NSArray *filteredBusinesses;
 
 @end
 
@@ -32,7 +31,6 @@
                               radius:nil
                           completion:^(NSArray *businesses, NSError *error) {
                               self.businesses = businesses;
-                              self.filteredBusinesses = businesses;
                               [self.tableView reloadData];
                           }];
     }
@@ -82,12 +80,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.filteredBusinesses.count;
+    return self.businesses.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BusinessCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"BusinessCell"];
-    cell.business = self.filteredBusinesses[indexPath.row];
+    cell.business = self.businesses[indexPath.row];
     return cell;
 }
 
@@ -95,14 +93,14 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (searchText.length == 0) {
-        self.filteredBusinesses = self.businesses;
-    } else {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains[c] %@", searchText];
-        self.filteredBusinesses = [self.businesses filteredArrayUsingPredicate:predicate];
-    }
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [YelpBusiness searchWithTerm:searchBar.text
+                      completion:^(NSArray *businesses, NSError *error) {
+                          self.businesses = businesses;
+                          [self.tableView reloadData];
+                      }];
     [self.tableView reloadData];
+    [searchBar resignFirstResponder];
 }
 
 - (void)hideKeyboard {
@@ -133,7 +131,6 @@
                           radius:radius
                       completion:^(NSArray *businesses, NSError *error) {
                           self.businesses = businesses;
-                          self.filteredBusinesses = businesses;
                           [self.tableView reloadData];
                       }];
 }

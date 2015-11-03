@@ -79,8 +79,6 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         parameters[@"radius_filter"] = [NSNumber numberWithFloat:[radius floatValue] * 1609.34];
     }
     
-    NSLog(@"%@", parameters);
-    
     return [self GET:@"search"
           parameters:parameters
              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
