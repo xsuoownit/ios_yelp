@@ -27,8 +27,9 @@
     if (self) {
         [YelpBusiness searchWithTerm:@"Restaurants"
                             sortMode:YelpSortModeBestMatched
-                          categories:@[@"burgers"]
+                          categories:nil
                                deals:NO
+                              radius:nil
                           completion:^(NSArray *businesses, NSError *error) {
                               self.businesses = businesses;
                               self.filteredBusinesses = businesses;
@@ -110,9 +111,7 @@
 
 - (void) filtersViewController:(FiltersViewController *)filtersViewController didChangeFilters:(NSDictionary *)filters {
     NSArray *categories = [filters objectForKey:@"categories"];
-    if (categories == nil) {
-        categories = @[@"burgers"];
-    }
+    
     YelpSortMode sortMode;
     if ([[filters objectForKey:@"sortMode"] isEqualToNumber:[NSNumber numberWithInt:0]]) {
         sortMode = YelpSortModeBestMatched;
@@ -121,10 +120,17 @@
     } else {
         sortMode = YelpSortModeHighestRated;
     }
+    
+    NSNumber *radius = [filters objectForKey:@"distance"];
+    if ([radius isEqualToNumber:[NSNumber numberWithFloat:0.0]]) {
+        radius = nil;
+    }
+    
     [YelpBusiness searchWithTerm:@"Restaurants"
                         sortMode:sortMode
                       categories:categories
-                           deals:[filters objectForKey:@"deals"]
+                           deals:[[filters objectForKey:@"deals"] boolValue]
+                          radius:radius
                       completion:^(NSArray *businesses, NSError *error) {
                           self.businesses = businesses;
                           self.filteredBusinesses = businesses;
